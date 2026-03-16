@@ -7,6 +7,8 @@ type ProductCardProps = {
   price: number;
   rating: number;
   category: string;
+  actions?: React.ReactNode;
+  detailTrigger?: React.ReactNode;
 };
 
 export default function ProductCard({
@@ -16,27 +18,43 @@ export default function ProductCard({
   price,
   rating,
   category,
+  actions,
+  detailTrigger,
 }: ProductCardProps) {
   return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden w-72 hover:shadow-lg transition duration-300">
-      <Image
-        src={image}
-        alt={title}
-        className="w-full h-48 object-contain p-4 bg-gray-50 rounded"
-        height={300}
-        width={200}
-      />
+    <div className="relative group bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
+      {actions && (
+        <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition">
+          {actions}
+        </div>
+      )}
 
-      <div className="p-4 flex flex-col gap-2">
-        <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded w-fit ">
+      <div className="h-52 flex items-center justify-center bg-gray-50">
+        <Image
+          src={image}
+          alt={title}
+          width={80}
+          height={80}
+          className="h-40 object-contain"
+        />
+      </div>
+
+      <div className="p-4 flex flex-col flex-1">
+        <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded w-fit mb-2">
           {category}
         </span>
-        <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-        <p className="text-sm text-gray-500">{description.slice(0, 80)}...</p>
-        <div className="flex justify-between items-center mt-2">
-          <span className="text-lg font-bold text-blue-600">${price}</span>
-          <span className="text-yellow-500 text-sm"> ⭐{rating}</span>
+
+        <h3 className="font-semibold text-lg line-clamp-2">{title}</h3>
+
+        <p className="text-gray-500 text-sm line-clamp-2 mt-1">{description}</p>
+
+        <div className="flex items-center justify-between mt-4">
+          <span className="text-blue-600 font-bold text-lg">${price}</span>
+
+          <span className="text-yellow-500 text-sm">⭐ {rating}</span>
         </div>
+
+        {detailTrigger && <div className="mt-4">{detailTrigger}</div>}
       </div>
     </div>
   );
