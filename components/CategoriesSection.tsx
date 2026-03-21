@@ -1,27 +1,59 @@
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import CategoryBubble from "./CategoryBubble";
 
-export default function CategoriesSection() {
+type CategoriesSectionProps = {
+  categories: string[];
+  title?: string;
+};
+
+const categoryEmojiMap: Record<string, string> = {
+  electronics: "🔌",
+  jewelery: "💍",
+  "men's clothing": "👕",
+  "women's clothing": "👗",
+};
+
+function formatCategoryLabel(category: string) {
+  return category
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export default function CategoriesSection({
+  categories,
+  title = "Explorar por categoria",
+}: CategoriesSectionProps) {
   return (
     <section className="max-w-7xl mx-auto px-6 py-14">
       <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-10 text-center">
-        Explorar por categoria
+        {title}
       </h2>
-      <ScrollArea.Root>
-        <ScrollArea.Viewport>
-          <div className="flex gap-8 md:gap-12 justify-start md:justify-center">
-            <CategoryBubble title="Electronic" emoji="🔌" />
-            <CategoryBubble title="Jewelery" emoji="💍" />
-            <CategoryBubble title="Men's Clothing" emoji="👕" />
-            <CategoryBubble title="Women's Clothing" emoji="👗" />
-            <CategoryBubble title="Books" emoji="📚" />
-            <CategoryBubble title="Toys" emoji="🧸" />
-            <CategoryBubble title="Sports" emoji="⚽" />
-            <CategoryBubble title="Home" emoji="🏠" />
-            <CategoryBubble title="Garden" emoji="🌿" />
-            <CategoryBubble title="Automotive" emoji="🚗" />
+      <ScrollArea.Root className="relative w-full">
+        <ScrollArea.Viewport className="w-full overflow-hidden rounded-md">
+          <div className="flex w-max min-w-full gap-8 md:gap-12 justify-start md:justify-center pb-2">
+            {categories.map((category) => (
+              <CategoryBubble
+                key={category}
+                title={formatCategoryLabel(category)}
+                emoji={categoryEmojiMap[category] ?? "🛍️"}
+              />
+            ))}
           </div>
         </ScrollArea.Viewport>
+        <ScrollArea.Scrollbar
+          orientation="horizontal"
+          className="flex h-2 touch-none select-none bg-gray-200/70 transition-colors"
+        >
+          <ScrollArea.Thumb className="relative flex-1 rounded-full bg-gray-400" />
+        </ScrollArea.Scrollbar>
+        <ScrollArea.Scrollbar
+          orientation="vertical"
+          className="flex w-2 touch-none select-none bg-gray-200/70 transition-colors"
+        >
+          <ScrollArea.Thumb className="relative flex-1 rounded-full bg-gray-400" />
+        </ScrollArea.Scrollbar>
+        <ScrollArea.Corner className="bg-gray-200/70" />
       </ScrollArea.Root>
     </section>
   );
