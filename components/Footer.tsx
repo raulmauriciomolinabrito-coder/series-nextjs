@@ -2,57 +2,52 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 mt-20">
-      <div className="max-w-7xl mx-auto px-6 py-14 grid gap-10 md:grid-cols-3">
-        {/* Marca */}
-
+    <footer className="mt-20 border-t border-gray-800 bg-gray-950 text-gray-300">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-3">
         <div>
-          <h3 className="text-xl font-bold text-white mb-3">NextShop</h3>
+          <h3 className="mb-3 text-xl font-bold text-white">NextFLIX</h3>
 
           <p className="text-sm text-gray-400">
-            Una tienda moderna creada con Next.js y Radix UI.
+            Plataforma de gestión de series construida con Next.js, Radix UI y
+            validaciones con Valibot.
           </p>
         </div>
 
-        {/* Links */}
-
         <div>
-          <h4 className="font-semibold text-white mb-4">Navegación</h4>
+          <h4 className="mb-4 font-semibold text-white">Navegación</h4>
 
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/" className="hover:text-white">
+              <Link href="/" className="transition hover:text-white">
                 Inicio
               </Link>
             </li>
 
             <li>
-              <Link href="/products" className="hover:text-white">
-                Productos
+              <Link href="/series" className="transition hover:text-white">
+                Series
               </Link>
             </li>
 
             <li>
-              <Link href="/about" className="hover:text-white">
+              <Link href="/about" className="transition hover:text-white">
                 Acerca de
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Contacto */}
-
         <div>
-          <h4 className="font-semibold text-white mb-4">Contacto</h4>
+          <h4 className="mb-4 font-semibold text-white">Contacto</h4>
 
-          <p className="text-sm text-gray-400">soporte@nextshop.com</p>
+          <p className="text-sm text-gray-400">soporte@nextflix.com</p>
 
           <p className="text-sm text-gray-400">La Paz, Bolivia</p>
         </div>
       </div>
 
-      <div className="border-t border-gray-800 text-center text-sm py-6 text-gray-500">
-        © {new Date().getFullYear()} NextShop — Todos los derechos reservados
+      <div className="border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+        © {new Date().getFullYear()} NextFLIX — Todos los derechos reservados
       </div>
     </footer>
   );
