@@ -30,6 +30,48 @@ export default function ProductFormModal({
   const [count, setCount] = useState(product?.rating?.count ?? 0);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const validateField = (fieldName: string, fieldValue: string | number) => {
+    // Crear el payload actualizado con el campo siendo validado para validar en tiempo real
+    const updatedPayload: PostProductRequest = {
+      title: fieldName === "title" ? (fieldValue as string) : title,
+      description:
+        fieldName === "description" ? (fieldValue as string) : description,
+      price: fieldName === "price" ? (fieldValue as number) : price,
+      category: fieldName === "category" ? (fieldValue as string) : category,
+      image: fieldName === "image" ? (fieldValue as string) : image,
+      rating: {
+        rate: fieldName === "rate" ? (fieldValue as number) : rate,
+        count: fieldName === "count" ? (fieldValue as number) : count,
+      },
+    };
+
+    const result = safeParse(productSchema, updatedPayload); // Validar el payload actualizado
+
+    // Extraer solo los errores relacionados con el campo que se está validando
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.issues.forEach((issue) => {
+        const field = issue.path?.[0]?.key;
+        if (typeof field === "string" && field.length > 0) {
+          fieldErrors[field] = issue.message;
+        }
+      });
+
+      // Solo actualizar el error del campo que se está validando
+      setErrors((prev) => ({
+        ...prev,
+        [fieldName]: fieldErrors[fieldName] || "",
+      }));
+    } else {
+      // Si la validación es exitosa, limpiar el error de este campo
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[fieldName];
+        return newErrors;
+      });
+    }
+  };
+
   const handleSubmit = async () => {
     const payload: PostProductRequest = {
       title,
@@ -112,7 +154,10 @@ export default function ProductFormModal({
             className={inputStyle}
             placeholder="Ej: Camiseta premium"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              validateField("title", e.target.value);
+            }}
           />
           {errors.title && (
             <p className="text-red-500 text-xs mt-1">{errors.title}</p>
@@ -129,7 +174,10 @@ export default function ProductFormModal({
             rows={3}
             placeholder="Describe el producto..."
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              validateField("description", e.target.value);
+            }}
           />
           {errors.description && (
             <p className="text-red-500 text-xs mt-1">{errors.description}</p>
@@ -144,7 +192,11 @@ export default function ProductFormModal({
             className={inputStyle}
             placeholder="0.00"
             value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
+            onChange={(e) => {
+              const newValue = Number(e.target.value);
+              setPrice(newValue);
+              validateField("price", newValue);
+            }}
           />
           {errors.price && (
             <p className="text-red-500 text-xs mt-1">{errors.price}</p>
@@ -158,7 +210,10 @@ export default function ProductFormModal({
             className={inputStyle}
             placeholder="Ej: ropa"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              validateField("category", e.target.value);
+            }}
           />
           {errors.category && (
             <p className="text-red-500 text-xs mt-1">{errors.category}</p>
@@ -174,7 +229,10 @@ export default function ProductFormModal({
             className={inputStyle}
             placeholder="https://..."
             value={image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => {
+              setImage(e.target.value);
+              validateField("image", e.target.value);
+            }}
           />
           {errors.image && (
             <p className="text-red-500 text-xs mt-1">{errors.image}</p>
@@ -192,7 +250,11 @@ export default function ProductFormModal({
             className={inputStyle}
             placeholder="4.5"
             value={rate}
-            onChange={(e) => setRate(Number(e.target.value))}
+            onChange={(e) => {
+              const newValue = Number(e.target.value);
+              setRate(newValue);
+              validateField("rate", newValue);
+            }}
           />
           {errors.rate && (
             <p className="text-red-500 text-xs mt-1">{errors.rate}</p>
@@ -208,7 +270,11 @@ export default function ProductFormModal({
             className={inputStyle}
             placeholder="120"
             value={count}
-            onChange={(e) => setCount(Number(e.target.value))}
+            onChange={(e) => {
+              const newValue = Number(e.target.value);
+              setCount(newValue);
+              validateField("count", newValue);
+            }}
           />
           {errors.count && (
             <p className="text-red-500 text-xs mt-1">{errors.count}</p>
