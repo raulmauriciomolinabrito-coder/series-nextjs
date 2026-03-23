@@ -7,10 +7,21 @@ type CategoriesSectionProps = {
 };
 
 const categoryEmojiMap: Record<string, string> = {
-  electronics: "🔌",
-  jewelery: "💍",
-  "men's clothing": "👕",
-  "women's clothing": "👗",
+  drama: "🎭",
+  comedy: "😂",
+  accion: "💥",
+  acción: "💥",
+  action: "💥",
+  thriller: "🕵️",
+  terror: "👻",
+  romance: "❤️",
+  fantasia: "🪄",
+  fantasía: "🪄",
+  cienciaficcion: "🚀",
+  "ciencia ficción": "🚀",
+  documental: "🎬",
+  animacion: "✨",
+  animación: "✨",
 };
 
 function formatCategoryLabel(category: string) {
@@ -22,7 +33,7 @@ function formatCategoryLabel(category: string) {
 
 export default function CategoriesSection({
   categories,
-  title = "Explorar por categoria",
+  title = "Explorar por género",
 }: CategoriesSectionProps) {
   return (
     <section className="max-w-7xl mx-auto px-6 py-14">
@@ -36,7 +47,7 @@ export default function CategoriesSection({
               <CategoryBubble
                 key={category}
                 title={formatCategoryLabel(category)}
-                emoji={categoryEmojiMap[category] ?? "🛍️"}
+                emoji={categoryEmojiMap[category.toLowerCase().trim()] ?? "📺"}
               />
             ))}
           </div>

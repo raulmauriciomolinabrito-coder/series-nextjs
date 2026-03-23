@@ -9,7 +9,7 @@ export default function Banner() {
             Plataforma de Gestión
           </span>
           <h1 className="mb-6 text-4xl font-bold leading-tight md:text-5xl">
-            Organiza tu catálogo de series en NextFLIX
+            NextFLIX una plataforma para gestionar series de forma simple y moderna
           </h1>
           <p className="mb-8 text-lg text-blue-100">
             Lista, crea y elimina series con formularios validados y una

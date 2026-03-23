@@ -3,11 +3,14 @@ import Banner from "@/components/Banner";
 import CartBubble from "@/components/CartBubble";
 import CategoriesSection from "@/components/CategoriesSection";
 import { UseGetProduct } from "./products/hooks/useGetProduct";
+import { UseGetSeries } from "./series/hooks/useGetSeries";
+import AboutPage from "./about/page";
 
 export default function Home() {
-  const { products, loading, error } = UseGetProduct();
+  //const { products, loading, error } = UseGetProduct();
+  const { series, loading, error   } = UseGetSeries();
 
-  const categories = [...new Set(products.map((product) => product.category))];
+  const categories = [...new Set(series.map((serie) => serie.genero))];
 
   return (
     <div className="bg-white min-h-screen">
@@ -24,6 +27,7 @@ export default function Home() {
         <CategoriesSection categories={categories} />
       )}
       <CartBubble />
+      <AboutPage />
     </div>
   );
 }
