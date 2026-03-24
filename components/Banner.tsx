@@ -38,7 +38,7 @@ export default function Banner() {
             loading="lazy"
           />
           <div className="absolute -bottom-4 -left-4 rounded-lg bg-black/70 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm">
-            + Catálogo en tiempo real
+            + Catálogo de series actualizado regularmente
           </div>
         </div>
       </div>

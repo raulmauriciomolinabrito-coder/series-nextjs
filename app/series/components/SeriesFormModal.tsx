@@ -21,10 +21,29 @@ export default function SeriesFormModal({ trigger, series, onSuccess }: Props) {
   const [genero, setGenero] = useState(series?.genero ?? "");
   const [sinopsis, setSinopsis] = useState(series?.sinopsis ?? "");
   const [urlPortada, setUrlPortada] = useState(series?.urlPortada ?? "");
-  const [estreno, setEstreno] = useState(series?.estreno ?? 2024);
+  const [estreno, setEstreno] = useState(series?.estreno ?? 2000);
   const [calificacion, setCalificacion] = useState(series?.calificacion ?? 8);
   const [plataforma, setPlataforma] = useState(series?.plataforma ?? "");
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const resetForm = () => {
+    setTitulo(series?.titulo ?? "");
+    setGenero(series?.genero ?? "");
+    setSinopsis(series?.sinopsis ?? "");
+    setUrlPortada(series?.urlPortada ?? "");
+    setEstreno(series?.estreno ?? 2024);
+    setCalificacion(series?.calificacion ?? 8);
+    setPlataforma(series?.plataforma ?? "");
+    setErrors({});
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+
+    if (!open) {
+      resetForm();
+    }
+  };
 
   const validateField = (fieldName: string, fieldValue: string | number) => {
     const updatedPayload: PostSeriesRequest = {
@@ -97,6 +116,7 @@ export default function SeriesFormModal({ trigger, series, onSuccess }: Props) {
     try {
       await createSeries(payload);
       alert("Serie creada exitosamente");
+      resetForm();
       setIsOpen(false);
       onSuccess?.();
     } catch {
@@ -114,7 +134,7 @@ export default function SeriesFormModal({ trigger, series, onSuccess }: Props) {
       description="Completa la información de la serie."
       size="md"
       open={isOpen}
-      onOpenChange={setIsOpen}
+      onOpenChange={handleOpenChange}
       footer={
         <div className="flex w-full items-center justify-end gap-3 border-t border-gray-100 pt-4">
           <DialogPrimitive.Close asChild>
