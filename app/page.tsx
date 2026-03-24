@@ -2,7 +2,7 @@
 import Banner from "@/components/Banner";
 import CartBubble from "@/components/CartBubble";
 import CategoriesSection from "@/components/CategoriesSection";
-import { UseGetProduct } from "./products/hooks/useGetProduct";
+//import { UseGetProduct } from "./products/hooks/useGetProduct";
 import { UseGetSeries } from "./series/hooks/useGetSeries";
 import AboutPage from "./about/page";
 
